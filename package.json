@@ -1,0 +1,14 @@
+{
+  "name": "cerebyte-vs",
+  "version": "0.1.0",
+  "description": "Cerebyte VS: İkinci Beyin vault'u için masaüstü paneli (hızlı yakalama, hatırlatıcı, günlük çalışma, tekrar kartları)",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}
