@@ -22,14 +22,17 @@ function setup(script) {
   return { ctx: makeCtx(vault), mod: require('../modules/claude/main'), dir };
 }
 
-test('claude: argümanlar güvenli (acceptEdits, Bash yok, bütçe sınırı, oturum kaydı yok)', () => {
+test('claude: argümanlar güvenli (acceptEdits, Bash yalnız receipt/log, bütçe sınırı, oturum kaydı yok)', () => {
   const { mod } = setup('true');
   for (const a of mod.ACTIONS) {
     const args = mod.buildArgs(a);
     assert.equal(args[0], '-p');
     assert.equal(args[1], a.prompt);
     assert.equal(args[args.indexOf('--permission-mode') + 1], 'acceptEdits');
-    assert.ok(!args[args.indexOf('--allowedTools') + 1].includes('Bash'), `${a.id} Bash izni almamalı`);
+    assert.equal(args.indexOf('--allowedTools'), args.length - a.tools.length - 1, '--allowedTools son sırada olmalı');
+    const tools = args.slice(args.indexOf('--allowedTools') + 1);
+    assert.ok(!tools.includes('Bash'), `${a.id} çıplak Bash izni almamalı`);
+    for (const t of tools.filter((x) => x.startsWith('Bash('))) assert.match(t, /^Bash\((py -3|python3?) (beyin\.py receipt|araclar\/vault\.py log):\*\)$/, `${a.id}: Bash yalnız receipt/log komutlarıyla sınırlı`);
     assert.ok(args.includes('--no-session-persistence'));
     assert.ok(Number(args[args.indexOf('--max-budget-usd') + 1]) > 0);
   }

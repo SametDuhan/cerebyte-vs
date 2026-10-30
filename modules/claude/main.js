@@ -1,6 +1,6 @@
 // Claude Code düğmeleri: actions.json'daki her eylem, vault klasöründe başsız `claude -p` olarak çalışır.
 // Hiçbir şey kendiliğinden çalışmaz (model çağrısı maliyetlidir); arayüz her çalıştırmadan önce onay ister.
-// Yazma izni yalnız Read/Edit/Write/Glob/Grep gibi actions.json'da listelenen araçlarla sınırlıdır, Bash yoktur.
+// İzinler actions.json'daki araç listesiyle sınırlıdır; Bash yalnız receipt/log komutlarına açıktır (çıplak Bash yok).
 const { spawn } = require('child_process');
 const fs = require('fs');
 const os = require('os');
@@ -21,8 +21,9 @@ function findClaude() {
 }
 
 function buildArgs(a) {
-  return ['-p', a.prompt, '--permission-mode', 'acceptEdits', '--allowedTools', a.tools.join(','),
-    '--output-format', 'text', '--no-session-persistence', ...(a.budget ? ['--max-budget-usd', String(a.budget)] : [])];
+  // --allowedTools değişken sayıda argüman alır; her kalıp ayrı argüman olmalı (boşluklu Bash kalıpları virgülle bölünür). Son sırada kalmalı.
+  return ['-p', a.prompt, '--permission-mode', 'acceptEdits', '--output-format', 'text', '--no-session-persistence',
+    ...(a.budget ? ['--max-budget-usd', String(a.budget)] : []), '--allowedTools', ...a.tools];
 }
 
 // Vault'taki metin dosyalarının parmak izi; çalıştırma öncesi/sonrası farkı "ne değişti" listesini verir.
@@ -56,7 +57,7 @@ function notify(body) {
 function killTree(child) {
   if (!child || child.exitCode !== null) return;
   if (process.platform === 'win32') spawn('taskkill', ['/pid', String(child.pid), '/T', '/F'], { windowsHide: true });
-  else child.kill('SIGTERM');
+  else { try { process.kill(-child.pid, 'SIGTERM'); } catch { child.kill('SIGTERM'); } } // POSIX: tüm süreç grubu
 }
 
 function publicJob() {
@@ -78,7 +79,7 @@ const api = {
     const append = (s) => { mine.output = (mine.output + s).slice(-MAX_OUT); };
     let child;
     try {
-      child = spawn(findClaude(), buildArgs(a), { cwd: ctx.vault, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
+      child = spawn(findClaude(), buildArgs(a), { cwd: ctx.vault, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'], detached: process.platform !== 'win32' });
     } catch (e) {
       mine.running = false; mine.finishedAt = Date.now(); mine.error = `Claude Code başlatılamadı: ${e.message}`;
       return publicJob();
