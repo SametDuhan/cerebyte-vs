@@ -4,7 +4,19 @@
     "title": "Inbox'ı işle",
     "desc": "inbox/yakala.md'deki maddeleri sınıflandırıp ilgili notlara taşır. Silmez, işlenenleri \"İşlendi\" başlığı altına alır.",
     "prompt": "/inbox",
-    "tools": ["Read", "Edit", "Write", "Glob", "Grep"],
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash(py -3 beyin.py receipt:*)",
+      "Bash(python beyin.py receipt:*)",
+      "Bash(python3 beyin.py receipt:*)",
+      "Bash(py -3 araclar/vault.py log:*)",
+      "Bash(python araclar/vault.py log:*)",
+      "Bash(python3 araclar/vault.py log:*)"
+    ],
     "budget": 0.5,
     "needs": "inbox"
   },
@@ -13,7 +25,19 @@
     "title": "Sabah planı",
     "desc": "Bugünün hatırlatıcıları, tekrar bekleyenler ve dünkü \"Yarına\" notuyla kısa bir plan çıkarır, günlük notu açar.",
     "prompt": "/sabah",
-    "tools": ["Read", "Edit", "Write", "Glob", "Grep"],
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash(py -3 beyin.py receipt:*)",
+      "Bash(python beyin.py receipt:*)",
+      "Bash(python3 beyin.py receipt:*)",
+      "Bash(py -3 araclar/vault.py log:*)",
+      "Bash(python araclar/vault.py log:*)",
+      "Bash(python3 araclar/vault.py log:*)"
+    ],
     "budget": 0.3
   },
   {
@@ -21,7 +45,19 @@
     "title": "Haftalık gözden geçirme",
     "desc": "Inbox'ı boşaltır, son 7 günü özetler, tekrarları ve gelecek hafta için 3 öncelik gösterir.",
     "prompt": "/haftalik",
-    "tools": ["Read", "Edit", "Write", "Glob", "Grep"],
+    "tools": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash(py -3 beyin.py receipt:*)",
+      "Bash(python beyin.py receipt:*)",
+      "Bash(python3 beyin.py receipt:*)",
+      "Bash(py -3 araclar/vault.py log:*)",
+      "Bash(python araclar/vault.py log:*)",
+      "Bash(python3 araclar/vault.py log:*)"
+    ],
     "budget": 0.6
   }
 ]
