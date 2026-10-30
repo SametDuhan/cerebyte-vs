@@ -4,6 +4,7 @@
   "description": "Cerebyte VS: İkinci Beyin vault'u için masaüstü paneli (hızlı yakalama, hatırlatıcı, günlük çalışma, tekrar kartları)",
   "main": "main.js",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "start": "electron .",
     "test": "node --test test/*.test.js"

@@ -44,3 +44,7 @@ node --test test/*.test.js        # modül mantığı, geçici vault ile
 electron . --smoke                # başsız: modülleri yükle, uyarıları yaz
 electron . --smoke-ui             # ekranları gez, konsol hatası ve ekran görüntüsü (yazar: BEYIN_VAULT'u geçici kopyaya yönelt!)
 ```
+
+## Lisans
+
+MIT, bkz. [LICENSE](LICENSE).
