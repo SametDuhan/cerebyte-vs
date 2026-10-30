@@ -137,7 +137,7 @@ async function smokeUi() {
     const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     await wait(800);
     const out = process.env.BEYIN_SHOTS || app.getPath('temp');
-    for (const id of ['today', 'yakala', 'hatirlatici', 'gunluk', 'tekrar', 'settings']) {
+    for (const id of ['today', 'yakala', 'hatirlatici', 'gunluk', 'tekrar', 'claude', 'settings']) {
       await js(`document.querySelector('nav button[data-id="${id}"]').click()`);
       await wait(700);
       report.screens[id] = await js(`document.getElementById('view').innerText.slice(0, 160)`);

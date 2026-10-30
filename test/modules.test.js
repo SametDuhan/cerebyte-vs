@@ -157,9 +157,9 @@ test('tekrar: kavram yokken bilgi uyarısı, vakti gelince bildirimli uyarı', (
 });
 
 // ---------------------------------------------------------------- modül keşfi
-test('keşif: dört modül yüklenir, sıralanır', () => {
+test('keşif: beş modül yüklenir, sıralanır', () => {
   const { discover } = require('../lib/modules');
   const mods = discover(path.join(__dirname, '..', 'modules'));
-  assert.deepEqual(mods.map((m) => m.id), ['yakala', 'hatirlatici', 'gunluk', 'tekrar']);
+  assert.deepEqual(mods.map((m) => m.id), ['yakala', 'hatirlatici', 'gunluk', 'tekrar', 'claude']);
   for (const m of mods) assert.equal(typeof m.impl.api, 'object');
 });
