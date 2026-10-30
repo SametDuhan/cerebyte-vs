@@ -56,3 +56,6 @@ pre { white-space: pre-wrap; color: var(--due); }
 #toast.bad { border-color: var(--due); }
 .mt8 { margin-top: 8px; } .mt16 { margin-top: 16px; } .mb6 { margin-bottom: 6px; }
 .w70 { width: 70px; } .w100 { width: 100px; }
+pre.out { color: var(--text); background: #0f0f16; border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; max-height: 380px; overflow: auto; font: 13px/1.5 Consolas, monospace; }
+button:disabled { opacity: .4; cursor: not-allowed; }
+[hidden] { display: none !important; }
